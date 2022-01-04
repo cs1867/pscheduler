@@ -23,7 +23,7 @@ Provides:	%{name} = %{version}-%{release}
 Requires:	pscheduler-server >= 4.3.0
 Requires:	%{_pscheduler_python}-pscheduler >= 4.3.0
 Requires:	pscheduler-test-throughput
-requires:	iperf
+requires:	iperf >= 2.0.13
 
 BuildRequires:	pscheduler-rpm
 

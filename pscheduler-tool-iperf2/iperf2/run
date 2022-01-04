@@ -208,6 +208,8 @@ def run_client():
         iperf2_args.append('-Z')
         iperf2_args.append(test_spec['congestion'])
 
+    iperf2_args.append('-fb')
+    iperf2_args.append('-e')
     
     # join and run_program want these all to be string types, so
     # just to be safe cast everything in the list to a string

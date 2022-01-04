@@ -79,6 +79,9 @@ def parse_output(lines):
 
         # Example line
         # [  3] 16.0-17.0 sec  37355520 Bytes  298844160 bits/sec
+        # [ ID] Interval        Transfer    Bandwidth       Write/Err  Rtry     Cwnd/RTT        NetPwr
+        # [  3] 0.00-5.00 sec  13148225536 Bytes  21035053145 bits/sec  100313/0          0       -1K/102 us  25778251.40
+
         test = re.match('\[\s*(\d+|SUM)\s*\]\s+([0-9\.]+)\s*\-\s*([0-9\.]+)\s+sec\s+(\d+(\.\d+)?)\s+(P|T|G|M|K)?Bytes\s+(\d+(\.\d+)?)\s+(P|T|G|M|K)?bits\/sec(\s+([0-9\.]+)\s+ms\s+(\d+)\/\s*(\d+)\s+)?', line)
         if test:
             stream_id         = test.group(1)
