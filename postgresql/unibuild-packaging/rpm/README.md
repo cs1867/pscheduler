@@ -32,3 +32,8 @@ cp postgresql-12.spec postgresql-12.spec.orig
 See if the RPM spec wil build as-is (unlikely).  If not, go through
 the changes to the previous version's spec and apply similar changes
 to the new one.
+
+Common spec issues:
+
+ * Sources are cited as being from `https://...`, which trips up
+   Unibuild.
