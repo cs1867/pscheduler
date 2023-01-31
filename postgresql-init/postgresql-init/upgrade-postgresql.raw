@@ -154,10 +154,22 @@ systemctl enable --now "postgresql-${TO}"
 # These two scripts are written by pg_upgrade.
 
 # Make the new version ready for action
-su - "${PG_USER}" -c "${TMPBASE}/analyze_new_cluster.sh"
+ANALYZE="${TMPBASE}/analyze_new_cluster.sh"
+if [ -x "${ANALYZE}"]
+then
+    # Older versions provide a script
+    su - "${PG_USER}" -c "${ANALYZE}"
+else
+    # Newer versions direct you to do this.
+    su - "${PG_USER}" -c "vacuumdb -U \"${PG_USER}\" --all --analyze-in-stages"
+fi
 
-# Remove the old one
-su - "${PG_USER}" -c "${TMPBASE}/delete_old_cluster.sh"
+# Remove the old one if a script was left to do it.
+DELETE_OLD="${TMPBASE}/delete_old_cluster.sh"
+if [ -x "${DELETE_OLD}" ]
+then
+    su - "${PG_USER}" -c "${DELETE_OLD}"
+fi
 
 
 echo
