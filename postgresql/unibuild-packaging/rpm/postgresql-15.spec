@@ -8,7 +8,6 @@
 %global pgbaseinstdir	/usr/pgsql-%{pgmajorversion}
 
 # Things that were missing or that we override globally
-BuildRequires: gcc
 %global pgmajorversion %{pgpackageversion}
 
 %global beta 0
