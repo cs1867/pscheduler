@@ -6,15 +6,9 @@ on:
       OS:
         description: 'OS to build'
         required: true
-      MINORPACKAGEID:
-        description: 'Minor Package run id'
-        required: true
-      I2UTILID:
-        description: 'I2util build run id'
-        required: true  
-      OWAMPID:
-        description: 'Owamp build run id'
-        required: true            
+      BUILD_VARS_JSON:
+        description: 'Build var json file'
+        required: true      
   workflow_run:
     workflows: "Create Artifacts and pass runid"
     branches: 'github-workflow'
@@ -23,7 +17,7 @@ on:
 
 jobs:
        
-  build:
+  build-pscheduler:
 
      runs-on: ubuntu-latest
 
@@ -39,54 +33,70 @@ jobs:
           run: |
             mkdir /home/runner/work/pscheduler/pscheduler/artifacts
           
-        - name: Download i2util artifacts 
-          uses: actions/download-artifact@v4
-          with:
-             name: i2util-${{ github.event.inputs.OS }}
-             repository: cs1867/i2util
-             path: artifacts
-             github-token: ${{ secrets.GIT_ACTIONS }}
-             run-id: ${{ github.event.inputs.I2UTILID }}
-             
-        - name: Download owamp artifacts
-          uses: actions/download-artifact@v4
-          with:
-            name: owamp-${{ github.event.inputs.OS }}
-            repository: cs1867/owamp
-            path:  artifacts
-            github-token: ${{ secrets.GIT_ACTIONS }}
-            run-id: ${{ github.event.inputs.OWAMPID }}
+        - name: Pretty-print BUILD_VARS_JSON
+          run: |
+            echo '${{ github.event.inputs.BUILD_VARS_JSON }}'
+            
+        - name: Extract dependencies
+          id: extract_deps
+          run: |
+            echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r '.repos[] | select(.name == "${{ github.event.repository.name }}") | .deps[]' > deps.txt
+            echo "Dependencies:"
+            cat deps.txt
+            
+        - name: Set dependencies as outputs
+          id: set_deps
+          run: |
+            DEPS=$(cat deps.txt)
+            echo "DEPS=$DEPS" >> $GITHUB_ENV
+            
+        - name: Download artifacts
+          run: |
+            while IFS= read -r repo; do
+              echo "Downloading artifact for $repo"
+              run_id=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r ".buildids | .[\"$repo\"]")
+              echo "rund id $run_id"
+              mkdir -p artifacts
+              gh run download $run_id --repo cs1867/$repo -D artifacts --name "$repo-${{ github.event.inputs.OS }}"
+            done < deps.txt
+          env:
+            GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
+
+        - name: run docker oneshot builder and github-actions-workflow.sh
+          run: |  
+            ls artifacts
+            ls artifacts/RPMS
       
           
         # github-actions-workflow.sh
-        - name: run docker oneshot builder and github-actions-workflow.sh
-          run: |
-           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-workflow.sh . '${{ github.event.inputs.OS }}'  
+      #  - name: run docker oneshot builder and github-actions-workflow.sh
+      #    run: |
+      #     curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-workflow.sh . '${{ github.event.inputs.OS }}'  
            
-        - uses: actions/upload-artifact@v3
-          with:
-          #Name the artifact uniquely
-            name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
-            #Where the finished product lives after the build
-            path: unibuild-repo
-            #Don't keep these for long.  This is just a test.
-            retention-days: 5
+      #  - uses: actions/upload-artifact@v3
+      #    with:
+      #    #Name the artifact uniquely
+      #      name: ${{ github.event.repository.name }}-${{ github.event.inputs.OS }}
+      #      #Where the finished product lives after the build
+      #      path: unibuild-repo
+      #      #Don't keep these for long.  This is just a test.
+      #      retention-days: 5
          
-        - name: Pass workflow to perl-shared repo
-          uses: actions/github-script@v6
-          with:
-            github-token: ${{ secrets.GIT_ACTIONS }}
-            script: |
-              await github.rest.actions.createWorkflowDispatch({
-              owner: 'cs1867',
-              repo: 'perl-shared',
-              workflow_id: 'perl-shared-workflow.yml',
-              ref: 'github-workflow',
-               inputs: {
-                OS: '${{ github.event.inputs.OS }}',
-                MINORPACKAGEID: '${{ github.event.inputs.MINORPACKAGEID }}',
-                I2UTILID: '${{ github.event.inputs.I2UTILID }}',
-                OWAMPID: '${{ github.event.inputs.OWAMPID }}',
-                PSCHEDULERID: '${{ github.run_id }}'
-              }
-              })
+      #  - name: Pass workflow to perl-shared repo
+      #    uses: actions/github-script@v6
+      #    with:
+      #      github-token: ${{ secrets.GIT_ACTIONS }}
+      #      script: |
+      #        await github.rest.actions.createWorkflowDispatch({
+      #        owner: 'cs1867',
+      #        repo: 'perl-shared',
+      #        workflow_id: 'perl-shared-workflow.yml',
+      #        ref: 'github-workflow',
+      #         inputs: {
+      #          OS: '${{ github.event.inputs.OS }}',
+      #          MINORPACKAGEID: '${{ github.event.inputs.MINORPACKAGEID }}',
+      #          I2UTILID: '${{ github.event.inputs.I2UTILID }}',
+      #          OWAMPID: '${{ github.event.inputs.OWAMPID }}',
+      #          PSCHEDULERID: '${{ github.run_id }}'
+      #        }
+      #        })
