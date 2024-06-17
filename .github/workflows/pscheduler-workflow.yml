@@ -61,7 +61,6 @@ jobs:
               gh run download $run_id --repo cs1867/$repo -D tmpartifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="tmpartifacts/$repo"
               ls -al "$artifact_path"/RPMS
-              mkdir artifacts
               cp "$artifact_path"/RPMS/*.rpm artifacts
             done < deps.txt
           env:
