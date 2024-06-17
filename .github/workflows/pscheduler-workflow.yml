@@ -60,8 +60,10 @@ jobs:
               echo "rund id $run_id"
               gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="artifacts/$repo"
+              echo "list artifact path"
               ls -al "$artifact_path"
               mkdir -p artifacts/RPMS
+              echo "copy to the artifacts RPM dir"
               cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
             done < deps.txt
           env:
