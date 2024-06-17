@@ -61,7 +61,8 @@ jobs:
               gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="artifacts/$repo"
               ls -al "$artifact_path"
-              cp "$artifact_path"/RPMS/*.rpm artifacts
+              mkdir -p artifacts/RPMS
+              cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
             done < deps.txt
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
