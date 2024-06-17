@@ -64,8 +64,8 @@ jobs:
 
         - name: run docker oneshot builder and github-actions-workflow.sh
           run: |  
-            ls artifacts
-            ls artifacts/RPMS
+            ls artifacts/$repo
+            ls artifacts/$repo/RPMS
       
           
         # github-actions-workflow.sh
