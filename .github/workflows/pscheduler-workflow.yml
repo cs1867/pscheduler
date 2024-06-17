@@ -49,6 +49,16 @@ jobs:
           run: |
             echo "cat deps.txt"
             cat deps.txt
+
+
+      #  - name: Download elmond artifacts 
+      ##    uses: actions/download-artifact@v4
+      #    with:
+      #       name: i2util-${{ github.event.inputs.OS }}
+      #       repository: cs1867/elmond
+      #       path: artifacts
+      #       github-token: ${{ secrets.GIT_ACTIONS }}
+      #       run-id: ${{ github.event.inputs.ELMONDID }}    
             
         - name: Download artifacts
           run: |
