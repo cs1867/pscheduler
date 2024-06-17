@@ -62,10 +62,10 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
-        - name: run docker oneshot builder and github-actions-workflow.sh
+        - name: list dirs
           run: |  
-            ls artifacts/$repo
-            ls artifacts/$repo/RPMS
+            ls -al  artifacts/$repo
+            ls  -al artifacts/$repo/RPMS
       
           
         # github-actions-workflow.sh
