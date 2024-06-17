@@ -70,7 +70,8 @@ jobs:
               echo "rund id $run_id"
               gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="artifacts/$repo"
-              ls -al "$artifact_path"
+              ls -al "$artifact_path"/RPMS
+              cp "$artifact_path"/RPMS/*.rpm "$artifact_path"
             done < deps.txt
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
@@ -78,7 +79,7 @@ jobs:
         - name: list dirs
           run: |  
             ls -al  artifacts 
-            ls  -al artifacts/RPMS
+            
       
           
         # github-actions-workflow.sh
