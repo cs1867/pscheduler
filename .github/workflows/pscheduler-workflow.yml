@@ -50,17 +50,7 @@ jobs:
           run: |
             echo "cat deps.txt"
             cat deps.txt
-
-
-      #  - name: Download elmond artifacts 
-      ##    uses: actions/download-artifact@v4
-      #    with:
-      #       name: i2util-${{ github.event.inputs.OS }}
-      #       repository: cs1867/elmond
-      #       path: artifacts
-      #       github-token: ${{ secrets.GIT_ACTIONS }}
-      #       run-id: ${{ github.event.inputs.ELMONDID }}    
-            
+   
         - name: Download artifacts
           run: |
             mkdir -p artifacts
@@ -71,14 +61,14 @@ jobs:
               gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="artifacts/$repo"
               ls -al "$artifact_path"/RPMS
-              cp "$artifact_path"/RPMS/*.rpm "$artifact_path"
+              cp "$artifact_path"/RPMS/*.rpm artifacts
             done < deps.txt
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
         - name: list dirs
           run: |  
-            ls -al  artifacts 
+            ls -al artifacts 
             
       
           
