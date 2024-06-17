@@ -41,6 +41,7 @@ jobs:
           id: extract_deps
           run: |
             echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r '.repos[] | select(.name == "${{ github.event.repository.name }}") | .deps[]' > deps.txt
+            
             echo "Dependencies:"
             cat deps.txt
             
@@ -67,15 +68,16 @@ jobs:
               echo "Downloading artifact for $repo"
               run_id=$(echo '${{ github.event.inputs.BUILD_VARS_JSON }}' | jq -r ".buildids | .[\"$repo\"]")
               echo "rund id $run_id"
-              gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"
+              gh run download $run_id --repo cs1867/$repo -D artifacts --name "$repo-${{ github.event.inputs.OS }}" || true
+
             done < deps.txt
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
         - name: list dirs
           run: |  
-            ls -al  artifacts/$repo
-            ls  -al artifacts/"$repo"/RPMS
+            ls -al  artifacts 
+            ls  -al artifacts/RPMS
       
           
         # github-actions-workflow.sh
