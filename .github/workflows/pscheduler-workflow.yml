@@ -75,7 +75,7 @@ jobs:
         - name: list dirs
           run: |  
             ls -al  artifacts/$repo
-            ls  -al artifacts/$repo/RPMS
+            ls  -al artifacts/"$repo"/RPMS
       
           
         # github-actions-workflow.sh
