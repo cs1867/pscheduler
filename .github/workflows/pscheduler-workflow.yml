@@ -66,16 +66,9 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
-        - name: list dirs
-          run: |  
-            ls -al artifacts 
-            
-      
-          
-        # github-actions-workflow.sh
-      #  - name: run docker oneshot builder and github-actions-workflow.sh
-      #    run: |
-      #     curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-workflow.sh . '${{ github.event.inputs.OS }}'  
+        - name: run docker oneshot builder and github-actions-workflow.sh
+          run: |
+           curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-workflow.sh . '${{ github.event.inputs.OS }}'  
            
       #  - uses: actions/upload-artifact@v3
       #    with:
