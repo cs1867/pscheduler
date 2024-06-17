@@ -71,8 +71,6 @@ jobs:
               gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"  
               artifact_path="artifacts/$repo"
               ls -al "$artifact_path"
-              echo "Extracting only the RPMS directory from $artifact_path"
-              unzip -o "$artifact_path" "RPMS/*" -d artifacts
             done < deps.txt
           env:
             GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
