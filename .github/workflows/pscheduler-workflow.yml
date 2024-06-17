@@ -48,7 +48,9 @@ jobs:
           id: set_deps
           run: |
             DEPS=$(cat deps.txt)
-            echo "DEPS=$DEPS" >> $GITHUB_ENV
+            echo "$DEPS" 
+            echo "cat deps.txt"
+            cat deps.txt
             
         - name: Download artifacts
           run: |
