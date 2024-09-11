@@ -52,7 +52,9 @@ jobs:
               cp project/toolbox/workflows/github-el-workflow.sh . 
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
               cp project/toolbox/workflows/github-db-workflow.sh . 
-            fi  
+              elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
+              cp project/toolbox/workflows/github-db-workflow.sh . 
+            fi
           
         - name: Pretty-print BUILD_VARS_JSON
           run: |
@@ -92,6 +94,13 @@ jobs:
                 cp -r "$artifact_path"/* artifacts/DEBS
                 echo "list artifacts DEBS dir"
                 ls -al artifacts/DEBS/*
+               elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
+                echo " ubuntu artifacts " 
+                mkdir -p artifacts/DEBS
+                echo "copy to the artifacts DEBS dir"
+                cp -r "$artifact_path"/* artifacts/DEBS
+                echo "list artifacts DEBS dir"
+                ls -al artifacts/DEBS/*
               fi
             done < deps.txt
           env:
@@ -103,6 +112,8 @@ jobs:
               curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-el-workflow.sh . '${{ github.event.inputs.OS }}'  
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
               curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}'  
+              elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
+              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}' 
             fi
             
         - uses: actions/upload-artifact@v3
