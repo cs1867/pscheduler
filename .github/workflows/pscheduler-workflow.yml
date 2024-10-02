@@ -53,7 +53,7 @@ jobs:
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
               cp project/toolbox/workflows/github-db-workflow.sh . 
               elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
-              cp project/toolbox/workflows/pscheduler_test.sh . 
+              cp project/toolbox/workflows/github-db-workflow.sh . 
             fi
           
         - name: Pretty-print BUILD_VARS_JSON
