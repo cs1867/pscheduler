@@ -53,7 +53,7 @@ jobs:
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
               cp project/toolbox/workflows/github-db-workflow.sh . 
               elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
-              cp project/toolbox/workflows/github-db-workflow.sh . 
+              cp project/toolbox/workflows/pscheduler_test.sh . 
             fi
           
         - name: Pretty-print BUILD_VARS_JSON
@@ -111,9 +111,9 @@ jobs:
             if [ "${{ github.event.inputs.OS }}" == 'ol8' ] || [ "${{ github.event.inputs.OS }}" == 'el9' ]; then
               curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-el-workflow.sh . '${{ github.event.inputs.OS }}'  
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
-              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}'  
+              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run .sh . '${{ github.event.inputs.OS }}'  
               elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
-              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}' 
+              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run pscheduler_test.sh . '${{ github.event.inputs.OS }}' 
             fi
             
         - uses: actions/upload-artifact@v3
