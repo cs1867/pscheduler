@@ -113,7 +113,7 @@ jobs:
               elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
               curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run .sh . '${{ github.event.inputs.OS }}'  
               elif [ "${{ github.event.inputs.OS }}" == 'u20' ] || [ "${{ github.event.inputs.OS }}" == 'u24' ]; then
-              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run pscheduler_test.sh . '${{ github.event.inputs.OS }}' 
+              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}' 
             fi
             
         - uses: actions/upload-artifact@v3
