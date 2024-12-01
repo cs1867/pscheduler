@@ -28,7 +28,7 @@ jobs:
             'ol8'|'el9')
               cp project/toolbox/workflows/github-el-workflow.sh .
               ;;
-            'd11'|'d12'|'u20'|'u24')
+            'd11'|'d12'|'u20'|'u22'|'u24')
               cp project/toolbox/workflows/github_u20_workflow.sh .
               ;;
           esac
