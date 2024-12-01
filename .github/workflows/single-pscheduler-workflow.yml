@@ -36,15 +36,15 @@ jobs:
       - name: Download artifacts
         run: |
           mkdir -p artifacts
-          echo "Downloading artifact for pscheduler"
-          echo "Run ID: 12096757775"
-          gh run download 12096757775 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
+          echo "Downloading artifact for owamp"
+          echo "Run ID: 12108946197"
+          gh run download 12108946197 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/owamp"
           echo "Listing artifact path:"
           ls -al "$artifact_path"
           echo "Downloading artifact for i2util"
-          echo "Run ID: 12096742911"
-          gh run download 12096742911 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
+          echo "Run ID: 12108946197"
+          gh run download 12108946197 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/perl-i2util"
 
         env:
