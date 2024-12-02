@@ -29,7 +29,6 @@ jobs:
               cp project/toolbox/workflows/github-el-workflow.sh .
               ;;
             'd11'|'d12'|'u20'|'u22'|'u24')
-              apt install --only-upgrade iperf3
               cp project/toolbox/workflows/github_u20_workflow.sh .
               ;;
           esac
@@ -37,6 +36,7 @@ jobs:
       - name: Download artifacts
         run: |
           mkdir -p artifacts
+          apt install --only-upgrade iperf3
           echo "Downloading artifact for owamp"
           echo "Run ID: 12108950443"
           gh run download 12108950443 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
