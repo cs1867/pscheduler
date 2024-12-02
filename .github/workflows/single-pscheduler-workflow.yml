@@ -36,7 +36,6 @@ jobs:
       - name: Download artifacts
         run: |
           mkdir -p artifacts
-          apt install --only-upgrade iperf3
           echo "Downloading artifact for owamp"
           echo "Run ID: 12108950443"
           gh run download 12108950443 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
