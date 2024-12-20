@@ -1,7 +1,7 @@
 Index: b/database/db-update.raw
 ===================================================================
---- a/database/db-update.raw	2024-09-06 11:42:50.606506075 -0400
-+++ b/database/db-update.raw	2024-09-06 11:42:55.858562534 -0400
+--- a/database/db-update.raw	2024-06-04 17:56:22.348712442 +0200
++++ b/database/db-update.raw	2024-10-16 16:47:03.396627759 +0200
 @@ -20,14 +20,11 @@
  $INTERACTIVE && printf "Loading database:\n" || true
  
