@@ -67,6 +67,15 @@ then
 fi
 
 
+# Check if the directory exists
+if [ ! -d "/var/run/postgresql/" ]; then
+    echo "/var/run/postgresql/ does not exist. Creating it..."
+    mkdir -p "/var/run/postgresql/" 
+    chown postgres:postgres "/var/run/postgresql/"  #
+else
+    echo "/var/run/postgresql/ already exists."
+fi
+
 # Initialize PostgreSQL
 
 systemctl stop postgresql
