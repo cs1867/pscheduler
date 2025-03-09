@@ -36,17 +36,23 @@ jobs:
       - name: Download artifacts
         run: |
           mkdir -p artifacts
+          mkdir -p artifacts/RPMS
           echo "Downloading artifact for owamp"
           echo "Run ID: 13741663953"
           gh run download 13741663953 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/owamp"
+          echo "copy to the artifacts RPM dir"
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           echo "Listing artifact path:"
           ls -al "$artifact_path"
           echo "Downloading artifact for i2util"
           echo "Run ID: 13741656255"
           gh run download 13741656255 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/i2util"
+          echo "copy to the artifacts RPM dir"
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           ls -al "$artifact_path"
+
 
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
