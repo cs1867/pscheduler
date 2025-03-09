@@ -45,7 +45,7 @@ jobs:
           echo "Downloading artifact for i2util"
           echo "Run ID: 13741656255"
           gh run download 13741656255 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
-          artifact_path="artifacts/perl-i2util"
+          artifact_path="artifacts/i2util"
           ls -al "$artifact_path"
 
         env:
