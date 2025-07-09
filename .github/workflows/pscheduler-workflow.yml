@@ -180,6 +180,6 @@ jobs:
               workflow_id: '${{ env.NEXTREPO}}-workflow.yml',
               ref: 'github-workflow',
                 inputs: {
-                BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}'
+                BUILD_VARS_JSON: process.env.BUILD_VARS_JSON
               }
               })
