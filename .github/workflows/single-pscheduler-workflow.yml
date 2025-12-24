@@ -9,7 +9,7 @@ env:
  
 jobs:
   pscheduler-daemon:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
 
     steps:
       # Checkout the repository
