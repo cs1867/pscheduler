@@ -5,7 +5,7 @@ on:
     branches:
       - github-workflow
 env:  
-  BUILD_OS: d11
+  BUILD_OS: u24
  
 jobs:
   pscheduler-daemon:
@@ -38,16 +38,16 @@ jobs:
           mkdir -p artifacts
           mkdir -p artifacts/deb
           echo "Downloading artifact for owamp"
-          echo "Run ID: 20491424014"
-          gh run download 20491424014 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
+          echo "Run ID: 20492005754"
+          gh run download 20492005754 --repo cs1867/owamp -D artifacts/owamp --name "owamp-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/owamp"
           echo "copy to the artifacts RPM dir"
           cp "$artifact_path"/*.deb artifacts/deb
           echo "Listing artifact path:"
           ls -al "$artifact_path"
           echo "Downloading artifact for i2util"
-          echo "Run ID: 20491377724"
-          gh run download 20491377724 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
+          echo "Run ID: 20491845247"
+          gh run download 20491845247 --repo cs1867/i2util -D artifacts/i2util --name "i2util-${{ env.BUILD_OS }}"  
           artifact_path="artifacts/i2util"
           echo "copy to the artifacts deb dir"
           cp "$artifact_path"/*.deb artifacts/deb
